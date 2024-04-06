@@ -69,6 +69,7 @@ Output only a song:
         model="claude-3-opus-20240229",
         temperature=0.8
     )
-    print(message.content)
+    lyrics = message.content[0].text
+    print(lyrics)
     # parse out the response
-    return {"Lyrics": message.content}
+    return {"Lyrics": lyrics}
