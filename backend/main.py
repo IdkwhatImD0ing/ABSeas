@@ -21,3 +21,4 @@ def read_root():
 
 @app.post("/song")
 def get_song():
+    return {"Hello": "Song"}
