@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 from anthropic import AsyncAnthropic
-from socket import ConnectionManager
+from socket_manager import ConnectionManager
 
 
 load_dotenv()  # take environment variables from .env.
@@ -41,27 +41,27 @@ async def get_song(prompt: Prompt):
     message = await client.messages.create(
         max_tokens=512,
         system="""
-You are a songwriter for kids. 
-You specialize in pirate-themed sea shanties.
-A song should include pirate-themed objects and ideas.
-Incorporate additional information in the song to teach kids about the topic.
+            You are a songwriter for kids. 
+            You specialize in pirate-themed sea shanties.
+            A song should include pirate-themed objects and ideas.
+            Incorporate additional information in the song to teach kids about the topic.
 
-Make it very short, simple in vocabulary, and incorporate rhyming. 
-Add pirate vocalizations in parentheses. 
-For example: (arr!), (yo-ho!), (ahoy!), and (avast!)
+            Make it very short, simple in vocabulary, and incorporate rhyming. 
+            Add pirate vocalizations in parentheses. 
+            For example: (arr!), (yo-ho!), (ahoy!), and (avast!)
 
-Remember: this is for kids. No mature themes, alcohol references, violence.
+            Remember: this is for kids. No mature themes, alcohol references, violence.
 
-Output only a song:
-[Verse]
-...
-[Chorus]
-...
-[Verse]
-...
-[Chorus]
-...
-""",
+            Output only a song:
+            [Verse]
+            ...
+            [Chorus]
+            ...
+            [Verse]
+            ...
+            [Chorus]
+            ...
+        """,
         messages=[
             {
                 "role": "user",
@@ -94,40 +94,41 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str | None = None)
             if event == "generate":
                 prompt = data["prompt"]
                 message = await client.messages.create(
-                max_tokens=512,
-                system="""
-You are a songwriter for kids. 
-You specialize in pirate-themed sea shanties.
-A song should include pirate-themed objects and ideas.
-Incorporate additional information in the song to teach kids about the topic.
+                    max_tokens=512,
+                    system="""
+                        You are a songwriter for kids. 
+                        You specialize in pirate-themed sea shanties.
+                        A song should include pirate-themed objects and ideas.
+                        Incorporate additional information in the song to teach kids about the topic.
 
-Make it very short, simple in vocabulary, and incorporate rhyming. 
-Add pirate vocalizations in parentheses. 
-For example: (arr!), (yo-ho!), (ahoy!), and (avast!)
+                        Make it very short, simple in vocabulary, and incorporate rhyming. 
+                        Add pirate vocalizations in parentheses. 
+                        For example: (arr!), (yo-ho!), (ahoy!), and (avast!)
 
-Remember: this is for kids. No mature themes, alcohol references, violence.
+                        Remember: this is for kids. No mature themes, alcohol references, violence.
 
-Output only a song:
-[Verse]
-...
-[Chorus]
-...
-[Verse]
-...
-[Chorus]
-...
-""",
-        messages=[
-            {
-                "role": "user",
-                "content": prompt.prompt,
-            }
-        ],
-        model="claude-3-opus-20240229",
-        temperature=0.8
-    )
+                        Output only a song:
+                        [Verse]
+                        ...
+                        [Chorus]
+                        ...
+                        [Verse]
+                        ...
+                        [Chorus]
+                        ...
+                        """,
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": prompt.prompt,
+                        }
+                    ],
+                    model="claude-3-opus-20240229",
+                    temperature=0.8
+                )
                 lyrics = message.content[0].text
-                print(lyrics)
+
+                
     except WebSocketDisconnect:
         print("Disconnecting...")
         await manager.disconnect(client_id)
