@@ -1,6 +1,11 @@
 import uvicorn
 from fastapi import FastAPI, Response, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Union
+
+class Prompt(BaseModel):
+    prompt: str
 
 app = FastAPI()
 
@@ -20,5 +25,6 @@ def read_root():
     return {"Hello": "World"}
 
 @app.post("/song")
-def get_song():
+async def get_song(prompt: Prompt):
+    print(prompt.prompt)
     return {"Hello": "Song"}
