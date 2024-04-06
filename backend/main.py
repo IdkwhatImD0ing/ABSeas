@@ -120,7 +120,7 @@ Output only a song:
         messages=[
             {
                 "role": "user",
-                "content": prompt.prompt,
+                "content": prompt,
             }
         ],
         model="claude-3-opus-20240229",
