@@ -70,9 +70,9 @@ function LyricsPage({setPage}) {
     if (song.mediaSource && audioElementRef.current) {
       const objectURL = URL.createObjectURL(song.mediaSource)
       audioElementRef.current.src = objectURL
-      // audioElementRef.current.play().catch((error) => {
-      //   console.error('Autoplay failed', error)
-      // })
+      audioElementRef.current.play().catch((error) => {
+        console.error('Autoplay failed', error)
+      })
 
       return () => {
         URL.revokeObjectURL(objectURL) // Clean up when the component unmounts or the source changes
