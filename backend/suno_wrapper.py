@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 from io import BytesIO
 import base64
 
-async def generate_and_broadcast_music(lyrics, manager):
+async def generate_and_broadcast_music(lyrics, manager, websocket):
     GenerateSong = SongsGen(os.environ.get("SUNO_COOKIE"))
     print(GenerateSong.get_limit_left())
     
@@ -40,6 +40,7 @@ async def generate_and_broadcast_music(lyrics, manager):
     # Retrieve the song audio content via a streaming HTTP request.
     response = GenerateSong.session.get(link, stream=True)
     audio = response.iter_content()
+    data = b''
     for chunk in audio:
         if chunk:
             # Encode each chunk into base64 to prepare it for transmission.
@@ -51,7 +52,8 @@ async def generate_and_broadcast_music(lyrics, manager):
                 "event": "audio",
                 "audio_data": utf
             }
+            data += chunk
             # Broadcast the audio chunk to listeners.
-            await manager.broadcast(obj)    
+            await manager.send_personal_message(obj, websocket)  
     
-    return link
+    return data

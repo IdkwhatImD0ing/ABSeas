@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from socket_manager import ConnectionManager
 from generate import generate_lyrics
 from suno_wrapper import generate_and_broadcast_music
+from metadata import generate_metadata
 from typing import Optional
 import os
 import firebase_admin
@@ -50,7 +51,6 @@ async def upload_audio(file: UploadFile = File(...)):
     # Check if the file is an MP3
     if not file.filename.endswith(".mp3"):
         raise HTTPException(status_code=400, detail="File must be an MP3.")
-
     try:
         # Initialize Firebase Storage
         bucket = storage.bucket()
@@ -91,9 +91,12 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 # Extract the substring starting from [Verse]
                 lyrics = lyrics[index:]
-                print(lyrics)
-                link = await generate_and_broadcast_music(lyrics, manager)
-                print(link)
+                data = await generate_and_broadcast_music(lyrics, manager, websocket)
+                
+                metadata = await generate_metadata(lyrics)
+                
+                manager.send_personal_message({"event": "metadata", "metadata": metadata}, websocket)
+                
                 
     except WebSocketDisconnect:
         print("Disconnecting...")

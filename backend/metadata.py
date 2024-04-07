@@ -141,8 +141,14 @@ async def generate_metadata(lyrics):
     audios = await generate_audios(pictures)
     b64_audios = [base64.b64encode(audio).decode("utf-8") for audio in audios]
     
-    return {
-        "pictures": b64_imgs,
-        "audios": b64_audios
-    }
+    pictures_data = [
+        {
+            "image": b64_imgs[i],
+            "audio": b64_audios[i],
+            "word": picture["word"],
+            "learning": picture["learning"],
+        } for i, picture in enumerate(pictures)
+    ]
+    
+    return pictures_data
     
