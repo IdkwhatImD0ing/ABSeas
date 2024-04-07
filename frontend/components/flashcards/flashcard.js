@@ -84,7 +84,7 @@ export default function Flashcards({ cardImg, cardName, learning, audio }) {
             color: "#535562",
             textAlign: "center",
             fontFamily: "Poppins",
-            fontSize: "1.75625rem",
+            fontSize: "1.5rem",
             fontWeight: "800",
           }}
         >
