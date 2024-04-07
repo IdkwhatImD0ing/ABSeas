@@ -14,6 +14,7 @@ export default function Home() {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      padding="36px"
       sx={{
         backgroundImage: 'url(/home.svg)',
         backgroundSize: 'cover',
