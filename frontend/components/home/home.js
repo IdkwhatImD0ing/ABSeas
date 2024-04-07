@@ -30,14 +30,12 @@ export default function Home({ sendData }) {
       <NavBar />
       <Stack
         width="100%"
-        height="66.17%"
         direction="column"
         spacing="4rem"
         display="flex"
-        justifyContent="center"
         alignItems="center"
         alignContent="center"
-        padding="56px 256px"
+        justifyContent="flex-start"
       >
         <SelectionButton viewMode={viewMode} setViewMode={setViewMode} />
         {viewMode === "Magic Mode" ? (
@@ -66,7 +64,13 @@ const MusicSvg = () => (
 );
 function MagicView({ sendData, topic, setTopic }) {
   return (
-    <>
+    <Box
+      padding="56px 256px"
+      display={"flex"}
+      alignContent={"center"}
+      justifyContent={"center"}
+      flexDirection={"column"}
+    >
       <Typography
         sx={{
           color: "var(--pink, #FF7AAA)",
@@ -92,7 +96,7 @@ function MagicView({ sendData, topic, setTopic }) {
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
         sx={{
-          maxWidth: "200px",
+          maxWidth: "600px",
           borderRadius: "38px",
           padding: "12px 22px",
           background: "#FFF",
@@ -120,7 +124,7 @@ function MagicView({ sendData, topic, setTopic }) {
             fontStyle: "normal",
             fontWeight: "700",
             lineHeight: "normal",
-            maxWidth: "200px",
+            maxWidth: "600px",
           },
         }}
       />
@@ -132,10 +136,13 @@ function MagicView({ sendData, topic, setTopic }) {
         }}
         sx={{
           width: "31.5rem",
-          height: "12.6rem",
+          height: "6.6rem",
           borderRadius: "38.333px",
           background: "var(--pink, #FF7AAA)",
           boxShadow: "19.166px 19.166px 0px 0px #F9367C",
+          "&:hover": {
+            backgroundColor: "#F9367C", // Darker shade on hover
+          },
         }}
       >
         <Stack
@@ -160,7 +167,7 @@ function MagicView({ sendData, topic, setTopic }) {
           <MusicSvg />
         </Stack>
       </Button>
-    </>
+    </Box>
   );
 }
 

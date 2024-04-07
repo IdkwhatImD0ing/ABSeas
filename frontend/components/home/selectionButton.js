@@ -10,12 +10,12 @@ export default function SelectionButton(props) {
       sx={{
         width: "43.98%",
         height: "18%",
-        borderRadius: "28px",
-        border: "8px solid var(--grey, #D1E4EE)",
+        borderRadius: "22px",
+        border: "6px solid var(--grey, #D1E4EE)",
         background: "#FFF",
         color: "#676767",
-        fontFamily: "Inter",
-        fontSize: "2.25213rem",
+        fontFamily: "Poppins",
+        fontSize: "2rem",
         fontStyle: "normal",
         fontWeight: "700",
         textAlign: "center",
@@ -36,7 +36,7 @@ export default function SelectionButton(props) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            padding="5px 9px"
+            padding="22px"
             sx={{
               borderRadius: "12px",
               background: "var(--pink, #FF7AAA)",
