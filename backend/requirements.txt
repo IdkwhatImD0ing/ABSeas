@@ -1,11 +1,16 @@
 aiohttp==3.9.3
 anthropic==0.23.1
+cryptography==42.0.5
+elevenlabs==1.0.4
 fastapi==0.110.1
+firebase-admin==6.5.0
+grpcio-status==1.62.1
 httptools==0.6.1
 ipykernel==6.29.3
+openai==1.16.2
 pandas==2.2.1
 pip-chill==1.0.3
+python-multipart==0.0.9
 suno-songs==0.4.0
 uvicorn==0.29.0
 watchfiles==0.21.0
-websockets==12.0

@@ -35,7 +35,6 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': 'abseas-8416d.appspot.com'
 })
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
