@@ -25,6 +25,7 @@ function NavBar() {
         alignItems="center"
         justifyContent="center"
       >
+        {/* library */}
         <Box
           width="100%"
           height="4.875rem"
@@ -58,6 +59,7 @@ function NavBar() {
             Library
           </Typography>
         </Box>
+        {/* Learn */}
         <Box
           width="100%"
           height="4.875rem"
