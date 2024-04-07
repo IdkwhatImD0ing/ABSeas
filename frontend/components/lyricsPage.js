@@ -81,21 +81,36 @@ function LyricsPage() {
       padding="36px"
       border="6px solid #D1E4EE"
       borderRadius="22px"
+      margin="auto"
     >
-      {song.lyrics && (
-        <Typography
-          sx={{
-            color: "#535562",
-            textAlign: "center",
-            fontFamily: "Poppins",
-            fontSize: "1.75625rem",
-            fontWeight: "800",
-          }}
-        >
-          {song.lyrics}
-        </Typography>
-      )}
-      <audio ref={audioElementRef} controls />
+      {song.lyrics ? (
+        <div>
+          {song.lyrics.split("\n").map((line, index) => {
+            console.log(line, index);
+            return (
+              <Typography
+                sx={{
+                  color: "#535562",
+                  textAlign: "center",
+                  fontFamily: "Poppins",
+                  fontSize: "1.75625rem",
+                  fontWeight: "800",
+                }}
+              >
+                {line.includes("[") && index === 1 ? (
+                  ""
+                ) : line.includes("[") ? (
+                  <br />
+                ) : (
+                  line
+                )}
+              </Typography>
+            );
+          })}
+        </div>
+      ) : null}
+
+      <audio ref={audioElementRef} controls style={{ margin: "auto" }} />
     </Box>
   );
 }
