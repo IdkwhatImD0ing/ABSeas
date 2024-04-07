@@ -15,14 +15,25 @@ function flashcards({ cardImg, cardName, learnName }) {
       <img src={cardImg} />
       <Typography
         sx={{
-          fontSize: "4rem",
+          fontSize: "3rem",
           color: "#535562",
           fontWeight: "900",
         }}
       >
         {cardName}
       </Typography>
-      <Typography sx={{}}>
+      <Typography
+        sx={{
+          fontSize: "2rem",
+          color: "#535562",
+          fontWeight: "900",
+          backgroundColor: "#FF7AAA",
+          color: "#fff",
+          textAlign: "center",
+          padding: "8px 12px",
+          borderRadius: "12px",
+        }}
+      >
         {learnName}
       </Typography>
     </Box>
