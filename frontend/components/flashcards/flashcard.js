@@ -5,14 +5,26 @@ import Flip from "react-card-flip";
 function flashcards({ cardImg, cardName, learnName }) {
   return (
     <Box
+      height="100%"
       sx={{
         padding: "36px",
         border: "6px solid #D1E4EE",
         borderRadius: "22px",
         width: "28vw",
+        display: "flex", // Added to center the content vertically and horizontally
+        flexDirection: "column", // Stack items vertically
+        alignItems: "center", // Center items horizontally
+        justifyContent: "center", // Center items vertically
       }}
     >
-      <img src={`/next.svg`} alt="card" />
+      <img
+        src={`/turtle.svg`}
+        alt="card"
+        style={{
+          maxWidth: "100%",
+          maxHeight: "100%",
+        }}
+      />
       <Typography
         sx={{
           color: "#535562",

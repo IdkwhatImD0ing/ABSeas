@@ -13,6 +13,9 @@ function flashcardsPage() {
       overflow={"hidden"}
       backgroundColor="#50B5FF"
       padding="36px"
+      gap="22px"
+      display="flex"
+      flexDirection="column"
     >
       <Typography
         sx={{
@@ -34,6 +37,7 @@ function flashcardsPage() {
       </Typography>
       <Grid
         width="100%"
+        height="90%"
         spacing={2}
         container
         sx={{
@@ -45,11 +49,16 @@ function flashcardsPage() {
         }}
       >
         {flashcards.map((card, index) => (
-          <Grid item xs={4} sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+          <Grid
+            height="50%"
+            item
+            xs={4}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Flashcards
               cardImg=""
               cardName="hello"
