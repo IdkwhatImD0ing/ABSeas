@@ -45,7 +45,6 @@ firebase_admin.initialize_app(cred, {
 # Initialize Firebase Storage
 bucket = storage.bucket()
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -168,8 +167,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 await manager.send_personal_message({"song_data": json.loads(content)}, websocket)
                 print(f"JSON file {file_name}' sent successfully.")
 
-                
-                
     except WebSocketDisconnect:
         print("Disconnecting...")
         await manager.disconnect(client_id)
