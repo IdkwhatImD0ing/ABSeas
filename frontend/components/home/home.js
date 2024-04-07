@@ -11,33 +11,30 @@ export default function Home() {
       top={0}
       left={0}
       overflow={'hidden'}
+      padding="36px"
       sx={{
         backgroundImage: 'url(/home.svg)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }}
     >
-        
       <Stack
         width="50.21%"
         height="66.17%"
         direction="column"
         spacing="4rem"
-        position="relative"
-        top="11.3%"
-        left="32.7%"
         alignItems="center"
         justifyContent="center"
       >
         <SelectionButton />
         <Typography
           sx={{
-            color: "var(--pink, #FF7AAA)",
-            textAlign: "center",
+            color: 'var(--pink, #FF7AAA)',
+            textAlign: 'center',
             WebkitTextStrokeWidth: 2,
-            WebkitTextStrokeColor: "#FFF",
-            fontFamily: "Poppins",
-            fontSize: "6.25rem",
+            WebkitTextStrokeColor: '#FFF',
+            fontFamily: 'Poppins',
+            fontSize: '6.25rem',
             color: 'var(--pink, #FF7AAA)',
             textAlign: 'center',
             WebkitTextStrokeWidth: 4,
@@ -53,9 +50,9 @@ export default function Home() {
           fullWidth
           placeholder="What do you want to sing about?"
           sx={{
-            borderRadius: "38px",
-            background: "#FFF",
-            boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
+            borderRadius: '38px',
+            background: '#FFF',
+            boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
             borderRadius: '38px',
             background: '#FFF',
             boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
@@ -73,12 +70,12 @@ export default function Home() {
           }}
           InputProps={{
             style: {
-              color: "#9A9A9A",
-              fontFamily: "Poppins",
-              fontSize: "2.57406rem",
-              fontStyle: "normal",
-              fontWeight: "700",
-              lineHeight: "normal",
+              color: '#9A9A9A',
+              fontFamily: 'Poppins',
+              fontSize: '2.57406rem',
+              fontStyle: 'normal',
+              fontWeight: '700',
+              lineHeight: 'normal',
             },
           }}
         />
@@ -115,7 +112,7 @@ export default function Home() {
         </Button>
       </Stack>
     </Box>
-  );
+  )
 }
 
 const MusicSvg = () => (
