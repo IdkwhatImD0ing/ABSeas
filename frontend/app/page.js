@@ -1,4 +1,4 @@
-import Home from '@/components/home/home'
+import Home from '@/components/Home/Home'
 import {Box} from '@mui/material'
 export default function Default() {
   return (
