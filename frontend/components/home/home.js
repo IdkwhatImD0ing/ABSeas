@@ -1,45 +1,47 @@
-'use client'
-import {useState} from 'react'
-import {Box, Stack, Typography, TextField, Button} from '@mui/material'
-import SelectionButton from './selectionButton'
-import NavBar from '../navBar'
+"use client";
+import { useState } from "react";
+import { Box, Stack, Typography, TextField, Button } from "@mui/material";
+import SelectionButton from "./selectionButton";
+import NavBar from "../navBar";
 
-export default function Home({sendData}) {
-  const [topic, setTopic] = useState('')
+export default function Home({ sendData }) {
+  const [topic, setTopic] = useState("");
   return (
     <Box
       width="100%"
       height="100%"
       top={0}
       left={0}
-      overflow={'hidden'}
+      overflow={"hidden"}
       display="flex"
       flexDirection="row"
-      alignItems="center"
-      justifyContent="center"
+      justifyContent="space-between"
       padding="36px"
       sx={{
-        backgroundImage: 'url(/home.svg)',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundImage: "url(/home.svg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <NavBar />
       <Stack
-        width="50.21%"
+        width="80vw"
         height="66.17%"
         direction="column"
         spacing="4rem"
-        alignItems="center"
+        display="flex"
         justifyContent="center"
+        alignItems="center"
+        alignContent="center"
+        padding="56px"
       >
         <SelectionButton />
         <Typography
           sx={{
-            color: 'var(--pink, #FF7AAA)',
-            textAlign: 'center',
-            fontFamily: 'Poppins',
-            fontSize: '6.25rem',
+            color: "var(--pink, #FF7AAA)",
+            textAlign: "center",
+            fontFamily: "Poppins",
+            fontSize: "6.25rem",
             fontWeight: 900,
             textShadow: `
           -4px -4px 0 #fff,  
@@ -56,51 +58,52 @@ export default function Home({sendData}) {
         </Typography>
         <TextField
           fullWidth
-          placeholder="What do you want to sing about?"
+          placeholder="I want to sing about..."
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           sx={{
-            borderRadius: '38px',
-            background: '#FFF',
-            boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
-            borderRadius: '38px',
-            background: '#FFF',
-            boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                border: 'none',
+            borderRadius: "38px",
+            padding: "12px 22px",
+            background: "#FFF",
+            boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
+            borderRadius: "38px",
+            background: "#FFF",
+            boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                border: "none",
               },
-              '&.Mui-focused fieldset': {
-                border: 'none',
+              "&.Mui-focused fieldset": {
+                border: "none",
               },
-              '&:hover fieldset': {
-                border: 'none',
+              "&:hover fieldset": {
+                border: "none",
               },
             },
           }}
           InputProps={{
             style: {
-              color: '#9A9A9A',
-              fontFamily: 'Poppins',
-              fontSize: '2.57406rem',
-              fontStyle: 'normal',
-              fontWeight: '700',
-              lineHeight: 'normal',
+              color: "#9A9A9A",
+              fontFamily: "Poppins",
+              fontSize: "2.07406rem",
+              fontStyle: "normal",
+              fontWeight: "700",
+              lineHeight: "normal",
             },
           }}
         />
         <Button
           onClick={() => {
             if (topic) {
-              sendData({event: 'generate', prompt: topic})
+              sendData({ event: "generate", prompt: topic });
             }
           }}
           sx={{
-            width: '31.5rem',
-            height: '9.6rem',
-            borderRadius: '38.333px',
-            background: 'var(--pink, #FF7AAA)',
-            boxShadow: '19.166px 19.166px 0px 0px #F9367C',
+            width: "31.5rem",
+            height: "9.6rem",
+            borderRadius: "38.333px",
+            background: "var(--pink, #FF7AAA)",
+            boxShadow: "19.166px 19.166px 0px 0px #F9367C",
           }}
         >
           <Stack
@@ -112,12 +115,12 @@ export default function Home({sendData}) {
             <MusicSvg />
             <Typography
               sx={{
-                color: '#FFF',
-                fontFamily: 'Poppins',
-                fontSize: '3.19rem',
+                color: "#FFF",
+                fontFamily: "Poppins",
+                fontSize: "3.19rem",
                 fontWeight: 800,
-                textAlign: 'center',
-                verticalAlign: 'middle',
+                textAlign: "center",
+                verticalAlign: "middle",
               }}
             >
               Play
@@ -127,7 +130,7 @@ export default function Home({sendData}) {
         </Button>
       </Stack>
     </Box>
-  )
+  );
 }
 
 const MusicSvg = () => (
@@ -143,4 +146,4 @@ const MusicSvg = () => (
       fill="white"
     />
   </svg>
-)
+);
