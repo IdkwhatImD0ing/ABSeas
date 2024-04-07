@@ -1,6 +1,7 @@
 import asyncio
 from dotenv import load_dotenv
 import aiohttp
+import os
 
 load_dotenv()
 import nest_asyncio

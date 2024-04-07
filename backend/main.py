@@ -2,9 +2,10 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from socket import ConnectionManager
+from socket_manager import ConnectionManager
 from generate import generate_lyrics
 from suno_wrapper import generate_and_broadcast_music
+from typing import Optional
 
 load_dotenv()  # take environment variables from .env.
 
@@ -38,7 +39,7 @@ async def get_song(prompt: Prompt):
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, client_id: str | None = None):
+async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = None):
     if client_id is None:
         client_id = websocket.query_params.get("client_id")
 
@@ -52,10 +53,17 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str | None = None)
             data = await websocket.receive_json()
             event = data["event"]
             if event == "generate":
+                print("Generate")
                 prompt = data["prompt"]
                 lyrics = await generate_lyrics(prompt)
-                link = await generate_and_broadcast_music(lyrics, manager)
+                print("Finished lyrics:")
+                # Find the index of [Verse]
+                index = lyrics.index("[Verse]")
+
+                # Extract the substring starting from [Verse]
+                lyrics = lyrics[index:]
                 print(lyrics)
+                link = await generate_and_broadcast_music(lyrics, manager)
                 print(link)
     except WebSocketDisconnect:
         print("Disconnecting...")
