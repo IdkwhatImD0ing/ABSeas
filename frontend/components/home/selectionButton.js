@@ -1,6 +1,6 @@
-"use client";
-import { Select, MenuItem, InputAdornment, Box } from "@mui/material";
-import { useState } from "react";
+'use client'
+import {Select, MenuItem, InputAdornment, Box} from '@mui/material'
+import {useState} from 'react'
 
 export default function SelectionButton(props) {
   return (
@@ -8,22 +8,22 @@ export default function SelectionButton(props) {
       value={props.viewMode}
       onChange={(e) => props.setViewMode(e.target.value)}
       sx={{
-        width: "43.98%",
-        height: "18%",
-        borderRadius: "28px",
-        border: "8px solid var(--grey, #D1E4EE)",
-        background: "#FFF",
-        color: "#676767",
-        fontFamily: "Inter",
-        fontSize: "2.25213rem",
-        fontStyle: "normal",
-        fontWeight: "700",
-        textAlign: "center",
-        ".MuiOutlinedInput-notchedOutline": { border: 0 },
-        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+        width: '43.98%',
+        height: '13.29%',
+        borderRadius: '22px',
+        border: '6px solid var(--grey, #D1E4EE)',
+        background: '#FFF',
+        color: '#676767',
+        fontFamily: 'Poppins',
+        fontSize: '2rem',
+        fontStyle: 'normal',
+        fontWeight: '700',
+        textAlign: 'center',
+        '.MuiOutlinedInput-notchedOutline': {border: 0},
+        '&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
           border: 0,
         },
-        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+        '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
           {
             border: 0,
           },
@@ -36,45 +36,45 @@ export default function SelectionButton(props) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            padding="5px 9px"
+            padding="22px"
             sx={{
-              borderRadius: "12px",
-              background: "var(--pink, #FF7AAA)",
+              borderRadius: '12px',
+              background: 'var(--pink, #FF7AAA)',
             }}
           >
-            {props.viewMode === "Magic Mode" ? <MagicSvg /> : <CardSvg />}
+            {props.viewMode === 'Magic Mode' ? <MagicSvg /> : <CardSvg />}
           </Box>
         </InputAdornment>
       }
     >
       <MenuItem
-        value={"Magic Mode"}
+        value={'Magic Mode'}
         sx={{
-          color: "#676767",
-          fontFamily: "Inter",
-          fontSize: "1.25213rem",
-          fontStyle: "normal",
-          fontWeight: "700",
-          lineHeight: "normal",
+          color: '#676767',
+          fontFamily: 'Inter',
+          fontSize: '1.25213rem',
+          fontStyle: 'normal',
+          fontWeight: '700',
+          lineHeight: 'normal',
         }}
       >
         Magic Mode
       </MenuItem>
       <MenuItem
-        value={"Card Mode"}
+        value={'Card Mode'}
         sx={{
-          color: "#676767",
-          fontFamily: "Inter",
-          fontSize: "1.25213rem",
-          fontStyle: "normal",
-          fontWeight: "700",
-          lineHeight: "normal",
+          color: '#676767',
+          fontFamily: 'Inter',
+          fontSize: '1.25213rem',
+          fontStyle: 'normal',
+          fontWeight: '700',
+          lineHeight: 'normal',
         }}
       >
         Card Mode
       </MenuItem>
     </Select>
-  );
+  )
 }
 
 const MagicSvg = () => (
@@ -90,7 +90,7 @@ const MagicSvg = () => (
       fill="white"
     />
   </svg>
-);
+)
 
 const CardSvg = () => (
   <svg
@@ -105,4 +105,4 @@ const CardSvg = () => (
       fill="white"
     />
   </svg>
-);
+)

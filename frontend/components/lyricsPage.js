@@ -55,7 +55,7 @@ function LyricsPage({setPage}) {
       )
     }
 
-    const intervalId = setInterval(updatePosition, 25) // Adjust interval for smoother or faster animation
+    const intervalId = setInterval(updatePosition, 50) // Adjust interval for smoother or faster animation
 
     return () => clearInterval(intervalId)
   }, [velocities])
@@ -99,13 +99,13 @@ function LyricsPage({setPage}) {
       justifyContent="flex-start"
       alignItems="center"
       padding="36px"
-      overflow="hidden"
+      overflow="auto"
       bgcolor="#50B5FF"
     >
       {song.lyrics ? (
         <div>
-          {song.lyrics.split("\n").map((line, index) => {
-            console.log(line, index);
+          {song.lyrics.split('\n').map((line, index) => {
+            console.log(line, index)
             return (
               <Typography
                 sx={{
@@ -116,42 +116,51 @@ function LyricsPage({setPage}) {
                   fontWeight: '800',
                 }}
               >
-                {line.includes("[") && index === 1 ? (
-                  ""
-                ) : line.includes("[") ? (
+                {line.includes('[') && index === 1 ? (
+                  ''
+                ) : line.includes('[') ? (
                   <br />
                 ) : (
                   line
                 )}
               </Typography>
-            );
+            )
           })}
-      {positions.map((pos, index) => (
-        <Box
-          key={index}
-          sx={{
-            position: 'absolute',
-            left: `${pos.x}px`,
-            top: `${pos.y}px`,
-          }}
-        >
-          <motion.img
-            height="250px"
-            width="250px"
-            src={`data:image/png;base64,${
-              song.metadata && song.metadata[index]
-                ? song.metadata[index].image
-                : ''
-            }`}
-            alt="Dynamic object"
-            {...wiggleAnimation}
-          />
-        </Box>
-      ))}
+          {positions.map((pos, index) => (
+            <Box
+              key={index}
+              sx={{
+                position: 'absolute',
+                left: `${pos.x}px`,
+                top: `${pos.y}px`,
+              }}
+            >
+              <motion.img
+                height="250px"
+                width="250px"
+                src={`data:image/png;base64,${
+                  song.metadata && song.metadata[index]
+                    ? song.metadata[index].image
+                    : ''
+                }`}
+                alt="Dynamic object"
+                {...wiggleAnimation}
+              />
+            </Box>
+          ))}
         </div>
       ) : null}
 
-      <audio ref={audioElementRef} controls style={{ margin: "auto" }} />
+      <audio
+        ref={audioElementRef}
+        controls
+        style={{
+          position: 'fixed',
+          bottom: '50px',
+          left: '50px',
+          margin: 'auto',
+        }}
+      />
       <Button
         onClick={() => {
           setPage(2)

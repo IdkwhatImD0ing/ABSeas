@@ -1,5 +1,5 @@
-import { Box, Typography, Stack } from "@mui/material";
-import React from "react";
+import {Box, Typography, Stack} from '@mui/material'
+import React from 'react'
 
 function NavBar() {
   return (
@@ -13,9 +13,9 @@ function NavBar() {
       alignItems="center"
       justifyContent="space-between"
       sx={{
-        borderRadius: "2.25rem",
-        border: "12px solid var(--grey, #D1E4EE)",
-        background: "#FFF",
+        borderRadius: '2.25rem',
+        border: '12px solid var(--grey, #D1E4EE)',
+        background: '#FFF',
       }}
     >
       <Stack
@@ -42,18 +42,18 @@ function NavBar() {
             alignItems="center"
             justifyContent="center"
             sx={{
-              borderRadius: "0.75rem",
-              background: "var(--green, #52DF3A)",
+              borderRadius: '0.75rem',
+              background: 'var(--green, #52DF3A)',
             }}
           >
             <MenuIcon />
           </Box>
           <Typography
             sx={{
-              color: "#676767",
-              fontFamily: "Poppins",
-              fontSize: "2rem",
-              fontWeight: "700",
+              color: '#676767',
+              fontFamily: 'Poppins',
+              fontSize: '2rem',
+              fontWeight: '700',
             }}
           >
             Library
@@ -76,18 +76,18 @@ function NavBar() {
             alignItems="center"
             justifyContent="center"
             sx={{
-              borderRadius: "0.75rem",
-              background: "var(--pink, #FF7AAA)",
+              borderRadius: '0.75rem',
+              background: 'var(--pink, #FF7AAA)',
             }}
           >
             <MenuIcon />
           </Box>
           <Typography
             sx={{
-              color: "#676767",
-              fontFamily: "Poppins",
-              fontSize: "2rem",
-              fontWeight: "700",
+              color: '#676767',
+              fontFamily: 'Poppins',
+              fontSize: '2rem',
+              fontWeight: '700',
             }}
           >
             Learn
@@ -104,8 +104,8 @@ function NavBar() {
         padding="0 1.20rem"
         gap={2}
         sx={{
-          borderRadius: "1.125rem",
-          border: "6px solid var(--grey, #D1E4EE)",
+          borderRadius: '1.125rem',
+          border: '6px solid var(--grey, #D1E4EE)',
         }}
       >
         <Box
@@ -115,28 +115,28 @@ function NavBar() {
           alignItems="center"
           justifyContent="center"
           sx={{
-            borderRadius: "0.75rem",
-            background: "var(--purple, #800080)",
+            borderRadius: '0.75rem',
+            background: 'var(--purple, #800080)',
           }}
         >
           <Cat />
         </Box>
         <Typography
           sx={{
-            color: "#676767",
-            fontFamily: "Poppins",
-            fontSize: "2rem",
-            fontWeight: "700",
+            color: '#676767',
+            fontFamily: 'Poppins',
+            fontSize: '2rem',
+            fontWeight: '700',
           }}
         >
           Jasmine
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }
 
-export default NavBar;
+export default NavBar
 
 const MenuIcon = () => (
   <svg
@@ -157,7 +157,7 @@ const MenuIcon = () => (
       fill="white"
     />
   </svg>
-);
+)
 
 const Cat = () => (
   <svg
@@ -172,4 +172,4 @@ const Cat = () => (
       fill="white"
     />
   </svg>
-);
+)
