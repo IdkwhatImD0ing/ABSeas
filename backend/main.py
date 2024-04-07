@@ -94,14 +94,12 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 # Extract the substring starting from [Verse]
                 lyrics = lyrics[index:]
-                audio = await generate_and_broadcast_music(lyrics, manager, websocket)
+                tasks  = [generate_and_broadcast_music(lyrics, manager, websocket), generate_metadata(lyrics, manager, websocket)]
+                data = await asyncio.gather(*tasks)
+                audio = data[0]
                 
-                tasks = [transcribe_audio(audio), generate_metadata(lyrics)]
-                tasks = await asyncio.gather(*tasks)
-                timestamps = tasks[0]
-                metadata = tasks[1]
-                
-                await manager.send_personal_message({"event": "song_data", "timestamps": timestamps, "metadata": metadata}, websocket)
+                timestamps = await transcribe_audio(audio)
+                await manager.send_personal_message({"event": "timestamps", "timestamps": timestamps}, websocket)
                 
                 
     except WebSocketDisconnect:
