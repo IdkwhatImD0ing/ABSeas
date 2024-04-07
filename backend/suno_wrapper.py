@@ -4,16 +4,19 @@ import aiohttp
 import os
 
 load_dotenv()
-import nest_asyncio
 
-nest_asyncio.apply()
 from suno import SongsGen
 from concurrent.futures import ThreadPoolExecutor
 
 from io import BytesIO
 import base64
 
-async def generate_and_broadcast_music(lyrics, manager):
+
+from openai import AsyncOpenAI
+import tempfile
+
+
+async def generate_and_broadcast_music(lyrics, manager, websocket):
     GenerateSong = SongsGen(os.environ.get("SUNO_COOKIE"))
     print(GenerateSong.get_limit_left())
     
@@ -40,6 +43,7 @@ async def generate_and_broadcast_music(lyrics, manager):
     # Retrieve the song audio content via a streaming HTTP request.
     response = GenerateSong.session.get(link, stream=True)
     audio = response.iter_content()
+    data = b''
     for chunk in audio:
         if chunk:
             # Encode each chunk into base64 to prepare it for transmission.
@@ -51,7 +55,23 @@ async def generate_and_broadcast_music(lyrics, manager):
                 "event": "audio",
                 "audio_data": utf
             }
+            data += chunk
             # Broadcast the audio chunk to listeners.
-            await manager.broadcast(obj)    
+            await manager.send_personal_message(obj, websocket)  
     
-    return link
+    return data
+
+async def transcribe_audio(audio):
+    client = AsyncOpenAI()
+    with tempfile.NamedTemporaryFile(
+            suffix=".mp3", mode="wb", delete=True
+        ) as temp_audio_file:
+        temp_audio_file.write(audio)
+        temp_audio_file.flush()
+        temp_audio_file.seek(0)
+
+        with open(temp_audio_file.name, "rb") as audio_file:
+            transcript_obj = await client.audio.transcriptions.create(
+                model="whisper-1", file=audio_file, response_format="verbose_json", timestamp_granularities=['word']
+            )
+    return transcript_obj.words
