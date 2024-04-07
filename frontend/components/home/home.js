@@ -1,6 +1,7 @@
 "use client";
 import { Box, Stack, Typography, TextField, Button } from "@mui/material";
 import SelectionButton from "./selectionButton";
+import NavBar from "../navBar";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       left={0}
       overflow={"hidden"}
       display="flex"
+      flexDirection="row"
       alignItems="center"
       justifyContent="center"
       padding="36px"
@@ -20,6 +22,7 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
+      <NavBar />
       <Stack
         width="50.21%"
         height="66.17%"

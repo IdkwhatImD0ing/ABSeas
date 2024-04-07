@@ -1,4 +1,5 @@
 import { Box, Typography, Grid } from "@mui/material";
+import NavBar from "../navBar";
 import Flashcards from "./flashcard";
 function flashcardsPage() {
   // Array of 6 elements
@@ -15,13 +16,22 @@ function flashcardsPage() {
       padding="36px"
       gap="22px"
       display="flex"
-      flexDirection="column"
+      flexDirection="row"
     >
-      <Typography
-        sx={{
-          fontSize: "4.2rem",
-          fontWeight: "900",
-          textShadow: `
+      <NavBar/>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        height="100%"
+      >
+        <Typography
+          sx={{
+            fontSize: "4.2rem",
+            fontWeight: "900",
+            textShadow: `
           -4px -4px 0 #fff,  
            4px -4px 0 #fff,
           -4px  4px 0 #fff,
@@ -30,43 +40,44 @@ function flashcardsPage() {
            4px  0 0 #fff,
            0  -4px 0 #fff,
            0   4px 0 #fff`,
-          color: "var(--pink, #FF7AAA)",
-        }}
-      >
-        Your music cards
-      </Typography>
-      <Grid
-        width="100%"
-        height="90%"
-        spacing={2}
-        container
-        sx={{
-          padding: "36px",
-          // border: "14px solid #",
-          backgroundColor: "#fff",
-          borderRadius: "36px",
-          minHeight: "50vh",
-        }}
-      >
-        {flashcards.map((card, index) => (
-          <Grid
-            height="50%"
-            item
-            xs={4}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Flashcards
-              cardImg=""
-              cardName="hello"
-              learnName="hello"
-            ></Flashcards>
-          </Grid>
-        ))}
-      </Grid>
+            color: "var(--pink, #FF7AAA)",
+          }}
+        >
+          Your music cards
+        </Typography>
+        <Grid
+          width="100%"
+          height="90%"
+          spacing={2}
+          container
+          sx={{
+            padding: "36px",
+            // border: "14px solid #",
+            backgroundColor: "#fff",
+            borderRadius: "36px",
+            minHeight: "50vh",
+          }}
+        >
+          {flashcards.map((card, index) => (
+            <Grid
+              height="50%"
+              item
+              xs={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Flashcards
+                cardImg=""
+                cardName="hello"
+                learnName="hello"
+              ></Flashcards>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Box>
   );
 }
