@@ -25,7 +25,7 @@ export default function Default() {
   })
   const [page, setPage] = useState(0) // 0 = Home, 1 = Song, 2 = Flashcards
   const ws = useRef(null) // Initialize ws ref to null for WebSocket
-  const audioDataQueue = useRef([]) // Initialize audioDataQueue ref to empty array
+  const [audioDataQueue, setAudioDataQueue] = useState([])
   const sourceBuffer = useRef(null)
 
   useEffect(() => {
@@ -40,24 +40,24 @@ export default function Default() {
         console.log('SourceBuffer created:', sb)
 
         // Once the SourceBuffer is ready, process any queued audio data
-        audioDataQueue.current.forEach((data) => {
+        audioDataQueue.forEach((data) => {
           console.log('Processing queued audio data')
           sb.appendBuffer(data)
         })
         // Clear the queue
-        audioDataQueue.current = []
+        setAudioDataQueue([])
 
         // Listen for when the SourceBuffer is ready for more data
         sb.addEventListener('updateend', () => {
-          if (audioDataQueue.current.length > 0) {
+          if (audioDataQueue.length > 0) {
             console.log('Processing queued audio data')
-            const nextData = audioDataQueue.current.shift()
+            const nextData = audioDataQueue.shift()
             if (!nextData) {
               console.error('Error getting next audio data')
               return
             }
             sb.appendBuffer(nextData)
-            audioDataQueue.current = audioDataQueue.current.slice(1) // Remove the first element
+            setAudioDataQueue(audioDataQueue.slice(1)) // Update the queue state
           }
         })
       } catch (e) {
@@ -102,7 +102,7 @@ export default function Default() {
         } else {
           // Queue the data if the SourceBuffer isn't ready
           console.log('Queueing audio data')
-          audioDataQueue.current.push(audioArrayBuffer)
+          setAudioDataQueue([...audioDataQueue, audioArrayBuffer])
         }
       }
     }

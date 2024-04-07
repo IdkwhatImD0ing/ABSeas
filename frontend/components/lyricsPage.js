@@ -66,29 +66,42 @@ function LyricsPage({setPage}) {
       transition: {repeat: Infinity, duration: 2},
     },
   }
-
   useEffect(() => {
-    const audioElement = audioElementRef.current
-
-    if (song.mediaSource && audioElement) {
+    if (song.mediaSource && audioElementRef.current) {
       const objectURL = URL.createObjectURL(song.mediaSource)
       audioElementRef.current.src = objectURL
-      // karaoke effect
-      const handleTimeUpdate = () => {
-        console.log('Current Time:', audioElement.currentTime)
-      }
-      audioElement.addEventListener('timeupdate', handleTimeUpdate)
-
-      audioElement.play().catch((error) => {
-        console.error('Autoplay failed', error)
-      })
+      // audioElementRef.current.play().catch((error) => {
+      //   console.error('Autoplay failed', error)
+      // })
 
       return () => {
         URL.revokeObjectURL(objectURL) // Clean up when the component unmounts or the source changes
-        audioElement.removeEventListener('timeupdate', handleTimeUpdate)
       }
     }
   }, [song.mediaSource])
+
+  // useEffect(() => {
+  //   const audioElement = audioElementRef.current
+
+  //   if (song.mediaSource && audioElement) {
+  //     const objectURL = URL.createObjectURL(song.mediaSource)
+  //     audioElementRef.current.src = objectURL
+  //     // karaoke effect
+  //     const handleTimeUpdate = () => {
+  //       console.log('Current Time:', audioElement.currentTime)
+  //     }
+  //     audioElement.addEventListener('timeupdate', handleTimeUpdate)
+
+  //     audioElement.play().catch((error) => {
+  //       console.error('Autoplay failed', error)
+  //     })
+
+  //     return () => {
+  //       URL.revokeObjectURL(objectURL) // Clean up when the component unmounts or the source changes
+  //       audioElement.removeEventListener('timeupdate', handleTimeUpdate)
+  //     }
+  //   }
+  // }, [song.mediaSource])
 
   return (
     <Box
@@ -105,9 +118,9 @@ function LyricsPage({setPage}) {
       {song.lyrics ? (
         <div>
           {song.lyrics.split('\n').map((line, index) => {
-            console.log(line, index)
             return (
               <Typography
+                key={index}
                 sx={{
                   color: '#535562',
                   textAlign: 'center',

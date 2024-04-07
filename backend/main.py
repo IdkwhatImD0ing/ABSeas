@@ -18,6 +18,7 @@ import uuid
 import json
 from starlette.responses import JSONResponse
 import requests
+from io import BytesIO
  
 
 class Prompt(BaseModel):
@@ -106,19 +107,40 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 metadata_result = await metadata_task
                 song_url, audio = await generate_task
                 audio_data = b''
-                for chunk in audio:
-                    if chunk:
-                        # Encode each chunk into base64 to prepare it for transmission.
-                        b64 = base64.b64encode(chunk)
-                        # Decode the base64 content into a UTF-8 string.
+                buffer = BytesIO()
+                desired_chunk_size = 48000
+                
+                async def process_and_send_large_chunk():
+                    if buffer.getbuffer().nbytes >= desired_chunk_size:
+                        # Reset buffer position to the start
+                        buffer.seek(0)
+
+                        # Read the data from the buffer
+                        large_chunk = buffer.read()
+
+                        # Translate binary to base64 string
+                        b64 = base64.b64encode(large_chunk)
+
+                        # Decode the base64 binary object into a string
                         utf = b64.decode('utf-8')
-                        # Create a dictionary object to store the audio chunk.
+
+                        # Create a dict object that stores the event as an audio chunk and sets the audio data to utf format
                         obj = {
                             "audio": utf
                         }
-                        audio_data += chunk
-                        # Broadcast the audio chunk to listeners.
-                        await manager.send_personal_message(obj, websocket)  
+                        # Wait for broadcasting to run
+                        await manager.send_personal_message(obj, websocket) 
+                        
+                        # Clear the buffer after sending
+                        buffer.seek(0)
+                        buffer.truncate()
+                
+                for chunk in audio:
+                    if chunk:
+                        buffer.write(chunk) 
+                        audio_data += chunk   
+                        await process_and_send_large_chunk()
+                         
                 # metadata_task = asyncio.create_task(generate_metadata(lyrics, manager, websocket))
                 # audio_task = asyncio.create_task(generate_and_broadcast_music(lyrics, manager, websocket))
                 # await metadata_task
