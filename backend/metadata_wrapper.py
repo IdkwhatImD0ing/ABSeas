@@ -131,8 +131,7 @@ async def generate_metadata(lyrics, manager, websocket):
     for img in removed:
         buffered = BytesIO()
         # Convert rgba 
-        img = img.convert("RGB")
-        img.save(buffered, format="JPEG")
+        img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
         b64_imgs.append(img_str)
     

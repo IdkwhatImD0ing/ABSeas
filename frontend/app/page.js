@@ -105,9 +105,6 @@ export default function Default() {
           audioDataQueue.current.push(audioArrayBuffer)
         }
       }
-      if (data.end_song) {
-        setPage(2)
-      }
     }
 
     ws.current = socket
@@ -131,7 +128,7 @@ export default function Default() {
     <SongContext.Provider value={{song, setSong}}>
       <Box width="100vw" height="100vh" top={0} left={0} overflow={'hidden'}>
         {page === 0 && <Home sendData={sendData} />}
-        {page === 1 && <LyricsPage />}
+        {page === 1 && <LyricsPage setPage={setPage} />}
         {page === 2 && <FlashcardsPage />}
       </Box>
     </SongContext.Provider>
