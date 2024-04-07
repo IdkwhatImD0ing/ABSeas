@@ -34,7 +34,7 @@ app.add_middleware(
 )
 
 # Initialize the Firebase Admin SDK
-cred = credentials.Certificate('../abseas_service_account_key.json')
+cred = credentials.Certificate('./abseas_service_account_key.json')
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'abseas-8416d.appspot.com'
 })
