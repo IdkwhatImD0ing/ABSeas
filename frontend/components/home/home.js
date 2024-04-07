@@ -38,11 +38,21 @@ export default function Home() {
         </Typography>
         <TextField
           fullWidth
-          placeholder={<Typography>What do you want to sing?</Typography>}
+          placeholder="What do you want to sing about?"
           sx={{
             borderRadius: '38px',
             background: '#FFF',
             boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
+          }}
+          InputProps={{
+            style: {
+              color: '#9A9A9A',
+              fontFamily: 'Poppins',
+              fontSize: '2.57406rem',
+              fontStyle: 'normal',
+              fontWeight: '700',
+              lineHeight: 'normal',
+            },
           }}
         />
         <Button
