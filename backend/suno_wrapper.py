@@ -29,7 +29,7 @@ async def generate_and_broadcast_music(lyrics):
         # Run the song generation function in a thread and wait for its completion.
         result = await loop.run_in_executor(
             pool,
-            lambda: GenerateSong.get_songs(lyrics, is_custom=True, title="custom", tags="slow, catchy, maritime, pirate"),
+            lambda: GenerateSong.get_songs(lyrics, is_custom=True, title="custom", tags="upbeat, catchy, maritime, pirate"),
         )
 
     # If song generation fails, return None.
