@@ -17,6 +17,7 @@ import base64
 import uuid
 import json
 from starlette.responses import JSONResponse
+import requests
  
 
 class Prompt(BaseModel):
@@ -122,7 +123,11 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 # audio_task = asyncio.create_task(generate_and_broadcast_music(lyrics, manager, websocket))
                 # await metadata_task
                 # audio = await audio_task
-
+                
+                await manager.send_personal_message({"end_song": "done"}, websocket)
+                timestamps = await transcribe_audio(audio_data)
+                await manager.send_personal_message({"timestamps": timestamps}, websocket)
+                
                 # Generate a unique song name using uuid
                 unique_song_name = prompt.replace(" ", "").strip() + str(uuid.uuid4()) 
                 
@@ -130,6 +135,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 song_document = {
                     'song_name': unique_song_name, # This will serve as a unique identifier
                     'lyrics': lyrics,
+                    'transcript': timestamps,
                     'song_url': song_url,
                     'images': metadata_result
                 }
@@ -149,9 +155,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 print(f"JSON file '{json_filename}' uploaded successfully.")
                 
-                await manager.send_personal_message({"end_song": "done"}, websocket)
-                timestamps = await transcribe_audio(audio_data)
-                await manager.send_personal_message({"timestamps": timestamps}, websocket)
                 
             elif event == "retrieve":
                 print("Retrieve Data")
@@ -162,7 +165,29 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 # Download the file content
                 content = blob.download_as_text()
+    #             content_dict = json.loads(content)
                 
+    #             # Get song audio data
+    #             response = requests.get(content_dict["song_url"])
+    #             if response.status_code != 200:
+    #                 raise Exception(f"Failed to download MP3: HTTP {response.status_code}")
+                
+    #             new_song_state = {
+    #                 "isFinished": True,
+    #                 "lyrics": content_dict["lyrics"],
+    #                 "songAudio": response.content
+    #             }
+                
+                
+    # """{
+    #     isFinished: true,
+    #     lyrics: '',
+    #     songAudio: null,
+    #     transcript: [],
+    #     metadata: [],
+    #     mediaSource: null,
+    #   }
+    # """
                 # Convert the content to JSON and send it through the websocket
                 await manager.send_personal_message({"song_data": json.loads(content)}, websocket)
                 print(f"JSON file {file_name}' sent successfully.")
