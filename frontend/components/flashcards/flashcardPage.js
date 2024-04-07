@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import Flashcards from "./flashcard";
 function flashcardsPage() {
   return (
     <Box
@@ -35,10 +36,10 @@ function flashcardsPage() {
           // border: "14px solid #",
           backgroundColor: "#fff",
           borderRadius: "36px",
-          minHeight: "50vh"
+          minHeight: "50vh",
         }}
       >
-        
+        <Flashcards cardImg="" cardName="hello" learnName="hello"></Flashcards>
       </Box>
     </Box>
   );
