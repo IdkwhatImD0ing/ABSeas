@@ -1,7 +1,4 @@
-"use client";
-import { useState, React, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
-import { motion } from "framer-motion";
+import React, {useContext, useEffect, useRef} from 'react'
 import SongContext from './SongContext'
 
 const getRandomPosition = (min, max) =>
@@ -68,7 +65,8 @@ function LyricsPage() {
     return (
       <Box
         display="flex"
-        justifyContent="flex-start"
+        flexDirection="column"
+      justifyContent="flex-start"
         width="fit-content"
         padding="36px"
         border="6px solid #D1E4EE"
@@ -80,7 +78,7 @@ function LyricsPage() {
               color: '#535562',
               textAlign: 'center',
               fontFamily: 'Poppins',
-              fontSize: '2.75625rem',
+              fontSize: '1.75625rem',
               fontWeight: '800',
             }}
           >
