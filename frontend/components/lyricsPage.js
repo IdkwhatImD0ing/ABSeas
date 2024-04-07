@@ -2,6 +2,7 @@
 import { useState, React, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import SongContext from './SongContext'
 
 const getRandomPosition = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -46,37 +47,49 @@ function RandomPositionedImages() {
   );
 }
 
-function LyricsPage({ lyrics }) {
-  return (
-    <Box sx={{ position: "relative", minHeight: "100vh" }}>
+function LyricsPage() {
+    const {song} = useContext(SongContext)
+    const audioElementRef = useRef(null)
+  
+    useEffect(() => {
+      if (song.mediaSource && audioElementRef.current) {
+        const objectURL = URL.createObjectURL(song.mediaSource)
+        audioElementRef.current.src = objectURL
+        audioElementRef.current.play().catch((error) => {
+          console.error('Autoplay failed', error)
+        })
+  
+        return () => {
+          URL.revokeObjectURL(objectURL) // Clean up when the component unmounts or the source changes
+        }
+      }
+    }, [song.mediaSource])
+  
+    return (
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          width: "fit-content",
-          padding: "22px 36px",
-          margin: "36px",
-          border: "6px solid #D1E4EE",
-          borderRadius: "22px",
-          backgroundColor: "#FFF",
-          margin: "20px auto",
-        }}
+        display="flex"
+        justifyContent="flex-start"
+        width="fit-content"
+        padding="36px"
+        border="6px solid #D1E4EE"
+        borderRadius="22px"
       >
-        <Typography
-          sx={{
-            color: "#535562",
-            textAlign: "center",
-            fontFamily: "Poppins",
-            fontSize: "2.55625rem",
-            fontWeight: "800",
-          }}
-        >
-          {lyrics}
-        </Typography>
+        {song.lyrics && (
+          <Typography
+            sx={{
+              color: '#535562',
+              textAlign: 'center',
+              fontFamily: 'Poppins',
+              fontSize: '2.75625rem',
+              fontWeight: '800',
+            }}
+          >
+            {song.lyrics}
+          </Typography>
+        )}
+        <audio ref={audioElementRef} controls />
       </Box>
-      <RandomPositionedImages />
-    </Box>
-  );
-}
-
-export default LyricsPage;
+    )
+  }
+  
+  export default LyricsPage
