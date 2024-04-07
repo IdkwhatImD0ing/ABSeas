@@ -31,13 +31,13 @@ function Lesson({ lessonImg, lessonName, time }) {
       </Typography>
       <Box
         backgroundColor="#D1E4EE"
-        borderRadius="12px"
-        padding="8px 14px"
+        borderRadius="16px"
+        padding="8px 16px"
         width={"fit-content"}
       >
         <Typography
           fontWeight="900"
-          fontSize={"1.6rem"}
+          fontSize={"1.8rem"}
           color="#676767"
           textAlign="center"
         >

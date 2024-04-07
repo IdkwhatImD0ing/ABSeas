@@ -37,7 +37,7 @@ export default function Home({ sendData }) {
         justifyContent="center"
         alignItems="center"
         alignContent="center"
-        padding="56px 100px"
+        padding="56px 256px"
       >
         <SelectionButton viewMode={viewMode} setViewMode={setViewMode} />
         {viewMode === "Magic Mode" ? (
@@ -88,11 +88,11 @@ function MagicView({ sendData, topic, setTopic }) {
         Sing!
       </Typography>
       <TextField
-        fullWidth
         placeholder="I want to sing about..."
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
         sx={{
+          maxWidth: "200px",
           borderRadius: "38px",
           padding: "12px 22px",
           background: "#FFF",
@@ -120,6 +120,7 @@ function MagicView({ sendData, topic, setTopic }) {
             fontStyle: "normal",
             fontWeight: "700",
             lineHeight: "normal",
+            maxWidth: "200px",
           },
         }}
       />
@@ -162,6 +163,8 @@ function MagicView({ sendData, topic, setTopic }) {
     </>
   );
 }
+
+// lessons page
 function CardView() {
   return (
     <Box>
@@ -191,6 +194,16 @@ function CardView() {
             lessonImg=" ./numbers.svg"
             lessonName="Counting"
             time="2 minutes"
+          />
+          <Lesson
+            lessonImg=" ./abc.svg"
+            lessonName="Letters"
+            time="5 minutes"
+          />
+          <Lesson
+            lessonImg=" ./shapes.svg"
+            lessonName="Shapes"
+            time="6 minutes"
           />
         </Stack>
       </Box>
