@@ -102,19 +102,30 @@ function LyricsPage({setPage}) {
       overflow="hidden"
       bgcolor="#50B5FF"
     >
-      {song.lyrics && (
-        <Typography
-          sx={{
-            color: '#535562',
-            textAlign: 'center',
-            fontFamily: 'Poppins',
-            fontSize: '1.75625rem',
-            fontWeight: '800',
-          }}
-        >
-          {song.lyrics}
-        </Typography>
-      )}
+      {song.lyrics ? (
+        <div>
+          {song.lyrics.split("\n").map((line, index) => {
+            console.log(line, index);
+            return (
+              <Typography
+                sx={{
+                  color: '#535562',
+                  textAlign: 'center',
+                  fontFamily: 'Poppins',
+                  fontSize: '1.75625rem',
+                  fontWeight: '800',
+                }}
+              >
+                {line.includes("[") && index === 1 ? (
+                  ""
+                ) : line.includes("[") ? (
+                  <br />
+                ) : (
+                  line
+                )}
+              </Typography>
+            );
+          })}
       {positions.map((pos, index) => (
         <Box
           key={index}
@@ -137,7 +148,10 @@ function LyricsPage({setPage}) {
           />
         </Box>
       ))}
-      <audio ref={audioElementRef} controls />
+        </div>
+      ) : null}
+
+      <audio ref={audioElementRef} controls style={{ margin: "auto" }} />
       <Button
         onClick={() => {
           setPage(2)

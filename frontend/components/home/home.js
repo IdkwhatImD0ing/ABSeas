@@ -1,11 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Box, Stack, Typography, TextField, Button } from "@mui/material";
+import { Box, Stack, Typography, TextField, Button, Card } from "@mui/material";
 import SelectionButton from "./selectionButton";
 import NavBar from "../navBar";
+import Lesson from "../Lessons/Lesson";
 
 export default function Home({ sendData }) {
   const [topic, setTopic] = useState("");
+  //   card or free mode
+  const [viewMode, setViewMode] = useState("Magic Mode");
+
   return (
     <Box
       width="100%"
@@ -25,7 +29,7 @@ export default function Home({ sendData }) {
     >
       <NavBar />
       <Stack
-        width="80vw"
+        width="100%"
         height="66.17%"
         direction="column"
         spacing="4rem"
@@ -33,101 +37,14 @@ export default function Home({ sendData }) {
         justifyContent="center"
         alignItems="center"
         alignContent="center"
-        padding="56px"
+        padding="56px 256px"
       >
-        <SelectionButton />
-        <Typography
-          sx={{
-            color: "var(--pink, #FF7AAA)",
-            textAlign: "center",
-            fontFamily: "Poppins",
-            fontSize: "6.25rem",
-            fontWeight: 900,
-            textShadow: `
-          -4px -4px 0 #fff,  
-           4px -4px 0 #fff,
-          -4px  4px 0 #fff,
-           4px  4px 0 #fff,
-          -4px  0 0 #fff,
-           4px  0 0 #fff,
-           0  -4px 0 #fff,
-           0   4px 0 #fff`,
-          }}
-        >
-          Sing!
-        </Typography>
-        <TextField
-          fullWidth
-          placeholder="I want to sing about..."
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-          sx={{
-            borderRadius: "38px",
-            padding: "12px 22px",
-            background: "#FFF",
-            boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
-            borderRadius: "38px",
-            background: "#FFF",
-            boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                border: "none",
-              },
-              "&.Mui-focused fieldset": {
-                border: "none",
-              },
-              "&:hover fieldset": {
-                border: "none",
-              },
-            },
-          }}
-          InputProps={{
-            style: {
-              color: "#9A9A9A",
-              fontFamily: "Poppins",
-              fontSize: "2.07406rem",
-              fontStyle: "normal",
-              fontWeight: "700",
-              lineHeight: "normal",
-            },
-          }}
-        />
-        <Button
-          onClick={() => {
-            if (topic) {
-              sendData({ event: "generate", prompt: topic });
-            }
-          }}
-          sx={{
-            width: "31.5rem",
-            height: "9.6rem",
-            borderRadius: "38.333px",
-            background: "var(--pink, #FF7AAA)",
-            boxShadow: "19.166px 19.166px 0px 0px #F9367C",
-          }}
-        >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            spacing={2}
-          >
-            <MusicSvg />
-            <Typography
-              sx={{
-                color: "#FFF",
-                fontFamily: "Poppins",
-                fontSize: "3.19rem",
-                fontWeight: 800,
-                textAlign: "center",
-                verticalAlign: "middle",
-              }}
-            >
-              Play
-            </Typography>
-            <MusicSvg />
-          </Stack>
-        </Button>
+        <SelectionButton viewMode={viewMode} setViewMode={setViewMode} />
+        {viewMode === "Magic Mode" ? (
+          <MagicView sendData={sendData} topic={topic} setTopic={setTopic} />
+        ) : (
+          <CardView />
+        )}
       </Stack>
     </Box>
   );
@@ -147,3 +64,149 @@ const MusicSvg = () => (
     />
   </svg>
 );
+function MagicView({ sendData, topic, setTopic }) {
+  return (
+    <>
+      <Typography
+        sx={{
+          color: "var(--pink, #FF7AAA)",
+          textAlign: "center",
+          fontFamily: "Poppins",
+          fontSize: "6.25rem",
+          fontWeight: 900,
+          textShadow: `
+      -4px -4px 0 #fff,  
+       4px -4px 0 #fff,
+      -4px  4px 0 #fff,
+       4px  4px 0 #fff,
+      -4px  0 0 #fff,
+       4px  0 0 #fff,
+       0  -4px 0 #fff,
+       0   4px 0 #fff`,
+        }}
+      >
+        Sing!
+      </Typography>
+      <TextField
+        placeholder="I want to sing about..."
+        value={topic}
+        onChange={(e) => setTopic(e.target.value)}
+        sx={{
+          maxWidth: "200px",
+          borderRadius: "38px",
+          padding: "12px 22px",
+          background: "#FFF",
+          boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
+          borderRadius: "38px",
+          background: "#FFF",
+          boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              border: "none",
+            },
+            "&.Mui-focused fieldset": {
+              border: "none",
+            },
+            "&:hover fieldset": {
+              border: "none",
+            },
+          },
+        }}
+        InputProps={{
+          style: {
+            color: "#9A9A9A",
+            fontFamily: "Poppins",
+            fontSize: "2.07406rem",
+            fontStyle: "normal",
+            fontWeight: "700",
+            lineHeight: "normal",
+            maxWidth: "200px",
+          },
+        }}
+      />
+      <Button
+        onClick={() => {
+          if (topic) {
+            sendData({ event: "generate", prompt: topic });
+          }
+        }}
+        sx={{
+          width: "31.5rem",
+          height: "12.6rem",
+          borderRadius: "38.333px",
+          background: "var(--pink, #FF7AAA)",
+          boxShadow: "19.166px 19.166px 0px 0px #F9367C",
+        }}
+      >
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
+          <MusicSvg />
+          <Typography
+            sx={{
+              color: "#FFF",
+              fontFamily: "Poppins",
+              fontSize: "3.19rem",
+              fontWeight: 800,
+              textAlign: "center",
+              verticalAlign: "middle",
+            }}
+          >
+            Play
+          </Typography>
+          <MusicSvg />
+        </Stack>
+      </Button>
+    </>
+  );
+}
+
+// lessons page
+function CardView() {
+  return (
+    <Box>
+      <Typography
+        sx={{
+          color: "var(--pink, #FF7AAA)",
+          textAlign: "center",
+          fontFamily: "Poppins",
+          fontSize: "6.25rem",
+          fontWeight: 900,
+          textShadow: `
+-4px -4px 0 #fff,  
+ 4px -4px 0 #fff,
+-4px  4px 0 #fff,
+ 4px  4px 0 #fff,
+-4px  0 0 #fff,
+ 4px  0 0 #fff,
+ 0  -4px 0 #fff,
+ 0   4px 0 #fff`,
+        }}
+      >
+        Lessons
+      </Typography>
+      <Box>
+        <Stack direction="row" spacing={2}>
+          <Lesson
+            lessonImg=" ./numbers.svg"
+            lessonName="Counting"
+            time="2 minutes"
+          />
+          <Lesson
+            lessonImg=" ./abc.svg"
+            lessonName="Letters"
+            time="5 minutes"
+          />
+          <Lesson
+            lessonImg=" ./shapes.svg"
+            lessonName="Shapes"
+            time="6 minutes"
+          />
+        </Stack>
+      </Box>
+    </Box>
+  );
+}

@@ -11,10 +11,12 @@ from metadata_wrapper import generate_metadata
 from typing import Optional
 import os
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials, storage, firestore
 import asyncio
 import base64
-
+import uuid
+import json
+ 
 
 class Prompt(BaseModel):
     prompt: str
@@ -39,6 +41,10 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': 'abseas-8416d.appspot.com'
 })
 
+# Initialize Firebase Storage
+bucket = storage.bucket()
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -55,8 +61,6 @@ async def upload_audio(file: UploadFile = File(...)):
     if not file.filename.endswith(".mp3"):
         raise HTTPException(status_code=400, detail="File must be an MP3.")
     try:
-        # Initialize Firebase Storage
-        bucket = storage.bucket()
 
         # Create a new blob in Firebase Storage
         file_name = file.filename
@@ -98,8 +102,8 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 
                 metadata_task  = asyncio.create_task(generate_metadata(lyrics, manager, websocket))
                 generate_task = asyncio.create_task(generate_and_broadcast_music(lyrics))
-                await metadata_task
-                audio = await generate_task
+                metadata_result = await metadata_task
+                song_url, audio = await generate_task
                 audio_data = b''
                 for chunk in audio:
                     if chunk:
@@ -118,6 +122,41 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 # audio_task = asyncio.create_task(generate_and_broadcast_music(lyrics, manager, websocket))
                 # await metadata_task
                 # audio = await audio_task
+                
+                
+                # Generate a unique song name using uuid
+                unique_song_name = prompt.replace(" ", "").strip() + str(uuid.uuid4()) 
+                
+                # Combine all data in the expected format
+                song_document = {
+                    'song_name': unique_song_name, # This will serve as a unique identifier
+                    'song_url': song_url,
+                    'images': metadata_result
+                }
+                song_document_json = json.dumps(song_document)
+
+                # Create a unique filename for the JSON file
+                json_filename = f"{unique_song_name}.json"
+                
+                # Create a new blob in Firebase Storage to store the JSON
+                blob = bucket.blob(f'song_data/{json_filename}')  # 'song_data' is a directory in the bucket
+
+                # Upload the JSON data as a file to Firebase Storage
+                blob.upload_from_string(
+                    song_document_json,
+                    content_type='application/json'
+                )
+
+                print(f"JSON file '{json_filename}' uploaded successfully.")
+
+                # print(unique_song_name, song_url)
+                
+                # # Upload the document to Firestore
+                # db = firestore.client()
+                # doc_ref = db.collection('songs').document(unique_song_name)
+                # doc_ref.set(song_document)
+                
+                
                 await manager.send_personal_message({"end_song": "done"}, websocket)
                 timestamps = await transcribe_audio(audio_data)
                 await manager.send_personal_message({"timestamps": timestamps}, websocket)
