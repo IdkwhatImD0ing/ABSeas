@@ -51,7 +51,9 @@ export default function Flashcards({ cardImg, cardName, learning, audio }) {
         justifyContent: "center", // Center items vertically
       }}
       onClick={() => {
-        playAudio();
+        if (!isFlipped) {
+          playAudio();
+        }
         setIsFlipped(!isFlipped);
       }}
     >
@@ -82,7 +84,7 @@ export default function Flashcards({ cardImg, cardName, learning, audio }) {
             color: "#535562",
             textAlign: "center",
             fontFamily: "Poppins",
-            fontSize: "2.75625rem",
+            fontSize: "1.75625rem",
             fontWeight: "800",
           }}
         >
