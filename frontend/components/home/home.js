@@ -11,7 +11,9 @@ export default function Home() {
       top={0}
       left={0}
       overflow={'hidden'}
-      padding="36px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       sx={{
         backgroundImage: 'url(/home.svg)',
         backgroundSize: 'cover',
