@@ -1,12 +1,17 @@
 from dotenv import load_dotenv
 import os
+import asyncio
+
 from anthropic import AsyncAnthropic
+from openai import AsyncOpenAI
 
 load_dotenv()
 
 client = AsyncAnthropic(
     api_key=os.environ.get("ANTHROPIC_API_KEY"),
 )
+
+openai_client = AsyncOpenAI()
 
 async def generate_lyrics(prompt):
     message = await client.messages.create(
@@ -44,3 +49,17 @@ Output only a song:
     )
     lyrics = message.content[0].text
     return lyrics
+
+async def generate_timestamps():
+    audio_file = open("temp.mp3", "rb")
+    transcript = await openai_client.audio.transcriptions.create(
+        file=audio_file,
+        model="whisper-1",
+        response_format="verbose_json",
+        timestamp_granularities=["word"]
+    )
+    
+    return transcript.words
+
+if __name__ == "__main__":
+    asyncio.run(generate_timestamps())
