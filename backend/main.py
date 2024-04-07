@@ -16,6 +16,7 @@ import asyncio
 import base64
 import uuid
 import json
+from starlette.responses import JSONResponse
  
 
 class Prompt(BaseModel):
@@ -122,14 +123,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 # audio_task = asyncio.create_task(generate_and_broadcast_music(lyrics, manager, websocket))
                 # await metadata_task
                 # audio = await audio_task
-                
-                
+
                 # Generate a unique song name using uuid
                 unique_song_name = prompt.replace(" ", "").strip() + str(uuid.uuid4()) 
                 
                 # Combine all data in the expected format
                 song_document = {
                     'song_name': unique_song_name, # This will serve as a unique identifier
+                    'lyrics': lyrics,
                     'song_url': song_url,
                     'images': metadata_result
                 }
@@ -148,18 +149,25 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
                 )
 
                 print(f"JSON file '{json_filename}' uploaded successfully.")
-
-                # print(unique_song_name, song_url)
-                
-                # # Upload the document to Firestore
-                # db = firestore.client()
-                # doc_ref = db.collection('songs').document(unique_song_name)
-                # doc_ref.set(song_document)
-                
                 
                 await manager.send_personal_message({"end_song": "done"}, websocket)
                 timestamps = await transcribe_audio(audio_data)
                 await manager.send_personal_message({"timestamps": timestamps}, websocket)
+                
+            elif event == "retrieve":
+                print("Retrieve Data")
+                file_name = data["file_name"]
+
+                # Create a blob object for the file
+                blob = bucket.blob(f"song_data/{file_name}")
+
+                # Download the file content
+                content = blob.download_as_text()
+                
+                # Convert the content to JSON and send it through the websocket
+                await manager.send_personal_message({"song_data": json.loads(content)}, websocket)
+                print(f"JSON file {file_name}' sent successfully.")
+
                 
                 
     except WebSocketDisconnect:
