@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from socket import ConnectionManager
 from generate import generate_lyrics
-
+from suno_wrapper import generate_and_broadcast_music
 
 load_dotenv()  # take environment variables from .env.
 
@@ -54,7 +54,9 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str | None = None)
             if event == "generate":
                 prompt = data["prompt"]
                 lyrics = await generate_lyrics(prompt)
+                link = await generate_and_broadcast_music(lyrics, manager)
                 print(lyrics)
+                print(link)
     except WebSocketDisconnect:
         print("Disconnecting...")
         await manager.disconnect(client_id)
