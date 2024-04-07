@@ -9,20 +9,22 @@ function flashcards({ cardImg, cardName, learnName }) {
         padding: "36px",
         border: "6px solid #D1E4EE",
         borderRadius: "22px",
-        width: "fit-content",
+        width: "28vw",
       }}
     >
-      <img src={cardImg} />
+      <img src={`/next.svg`} alt="card" />
       <Typography
         sx={{
-          fontSize: "3rem",
           color: "#535562",
-          fontWeight: "900",
+          textAlign: "center",
+          fontFamily: "Poppins",
+          fontSize: "2.75625rem",
+          fontWeight: "800",
         }}
       >
         {cardName}
       </Typography>
-      <Typography
+      {/* <Typography
         sx={{
           fontSize: "2rem",
           color: "#535562",
@@ -35,7 +37,7 @@ function flashcards({ cardImg, cardName, learnName }) {
         }}
       >
         {learnName}
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }

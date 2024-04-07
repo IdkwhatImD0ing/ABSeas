@@ -1,6 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import Flashcards from "./flashcard";
 function flashcardsPage() {
+  // Array of 6 elements
+  const flashcards = Array.from({ length: 6 }, (v, i) => i);
   return (
     <Box
       width="100%"
@@ -30,7 +32,10 @@ function flashcardsPage() {
       >
         Your music cards
       </Typography>
-      <Box
+      <Grid
+        width="100%"
+        spacing={2}
+        container
         sx={{
           padding: "36px",
           // border: "14px solid #",
@@ -39,8 +44,20 @@ function flashcardsPage() {
           minHeight: "50vh",
         }}
       >
-        <Flashcards cardImg="" cardName="hello" learnName="hello"></Flashcards>
-      </Box>
+        {flashcards.map((card, index) => (
+          <Grid item xs={4} sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <Flashcards
+              cardImg=""
+              cardName="hello"
+              learnName="hello"
+            ></Flashcards>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 }
