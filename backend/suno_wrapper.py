@@ -16,7 +16,7 @@ from openai import AsyncOpenAI
 import tempfile
 
 
-async def generate_and_broadcast_music(lyrics, manager, websocket):
+async def generate_and_broadcast_music(lyrics):
     GenerateSong = SongsGen(os.environ.get("SUNO_COOKIE"))
     print(GenerateSong.get_limit_left())
     
@@ -43,23 +43,7 @@ async def generate_and_broadcast_music(lyrics, manager, websocket):
     # Retrieve the song audio content via a streaming HTTP request.
     response = GenerateSong.session.get(link, stream=True)
     audio = response.iter_content()
-    data = b''
-    for chunk in audio:
-        if chunk:
-            # Encode each chunk into base64 to prepare it for transmission.
-            b64 = base64.b64encode(chunk)
-            # Decode the base64 content into a UTF-8 string.
-            utf = b64.decode('utf-8')
-            # Create a dictionary object to store the audio chunk.
-            obj = {
-                "event": "audio",
-                "audio_data": utf
-            }
-            data += chunk
-            # Broadcast the audio chunk to listeners.
-            await manager.send_personal_message(obj, websocket)  
-    
-    return data
+    return audio
 
 async def transcribe_audio(audio):
     client = AsyncOpenAI()

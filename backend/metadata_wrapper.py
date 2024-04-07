@@ -42,6 +42,7 @@ Example output
 """
 
 async def generate_metadata(lyrics, manager, websocket):
+    print("Generating metadata")
     client = AsyncAnthropic(
         # This is the default and can be omitted
         api_key=os.environ.get("ANTHROPIC_API_KEY"),
@@ -140,7 +141,6 @@ async def generate_metadata(lyrics, manager, websocket):
     
     audios = await generate_audios(pictures)
     b64_audios = [base64.b64encode(audio).decode("utf-8") for audio in audios]
-    
     pictures_data = [
         {
             "image": b64_imgs[i],
@@ -149,8 +149,7 @@ async def generate_metadata(lyrics, manager, websocket):
             "learning": picture["learning"],
         } for i, picture in enumerate(pictures)
     ]
-    
-    await manager.send_personal_message({"event": "metadata", "metadata": pictures_data}, websocket)  
-    
+    print("finished generating metadata")
+    await manager.send_personal_message({"metadata": pictures_data}, websocket)  
     return pictures_data
     

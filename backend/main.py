@@ -13,7 +13,7 @@ import os
 import firebase_admin
 from firebase_admin import credentials, storage
 import asyncio
-
+import base64
 
 
 class Prompt(BaseModel):
@@ -34,7 +34,7 @@ app.add_middleware(
 )
 
 # Initialize the Firebase Admin SDK
-cred = credentials.Certificate('../abseas_service_account_key.json')
+cred = credentials.Certificate('./abseas_service_account_key.json')
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'abseas-8416d.appspot.com'
 })
@@ -94,12 +94,33 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 # Extract the substring starting from [Verse]
                 lyrics = lyrics[index:]
-                tasks  = [generate_and_broadcast_music(lyrics, manager, websocket), generate_metadata(lyrics, manager, websocket)]
-                data = await asyncio.gather(*tasks)
-                audio = data[0]
+                await manager.send_personal_message({"lyrics": lyrics}, websocket)
                 
-                timestamps = await transcribe_audio(audio)
-                await manager.send_personal_message({"event": "timestamps", "timestamps": timestamps}, websocket)
+                metadata_task  = asyncio.create_task(generate_metadata(lyrics, manager, websocket))
+                generate_task = asyncio.create_task(generate_and_broadcast_music(lyrics))
+                await metadata_task
+                audio = await generate_task
+                audio_data = b''
+                for chunk in audio:
+                    if chunk:
+                        # Encode each chunk into base64 to prepare it for transmission.
+                        b64 = base64.b64encode(chunk)
+                        # Decode the base64 content into a UTF-8 string.
+                        utf = b64.decode('utf-8')
+                        # Create a dictionary object to store the audio chunk.
+                        obj = {
+                            "audio": utf
+                        }
+                        audio_data += chunk
+                        # Broadcast the audio chunk to listeners.
+                        await manager.send_personal_message(obj, websocket)  
+                # metadata_task = asyncio.create_task(generate_metadata(lyrics, manager, websocket))
+                # audio_task = asyncio.create_task(generate_and_broadcast_music(lyrics, manager, websocket))
+                # await metadata_task
+                # audio = await audio_task
+                await manager.send_personal_message({"end_song": "done"}, websocket)
+                timestamps = await transcribe_audio(audio_data)
+                await manager.send_personal_message({"timestamps": timestamps}, websocket)
                 
                 
     except WebSocketDisconnect:
