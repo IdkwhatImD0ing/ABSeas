@@ -1,17 +1,20 @@
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from dotenv import load_dotenv
+
 from socket_manager import ConnectionManager
 from generate import generate_lyrics
-from suno_wrapper import generate_and_broadcast_music
-from metadata import generate_metadata
+from suno_wrapper import generate_and_broadcast_music, transcribe_audio
+from metadata_wrapper import generate_metadata
 from typing import Optional
 import os
 import firebase_admin
 from firebase_admin import credentials, storage
+import asyncio
 
-load_dotenv()  # take environment variables from .env.
+
 
 class Prompt(BaseModel):
     prompt: str
@@ -91,11 +94,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: Optional[str] = No
 
                 # Extract the substring starting from [Verse]
                 lyrics = lyrics[index:]
-                data = await generate_and_broadcast_music(lyrics, manager, websocket)
+                audio = await generate_and_broadcast_music(lyrics, manager, websocket)
                 
-                metadata = await generate_metadata(lyrics)
+                tasks = [transcribe_audio(audio), generate_metadata(lyrics)]
+                tasks = await asyncio.gather(*tasks)
+                timestamps = tasks[0]
+                metadata = tasks[1]
                 
-                manager.send_personal_message({"event": "metadata", "metadata": metadata}, websocket)
+                await manager.send_personal_message({"event": "song_data", "timestamps": timestamps, "metadata": metadata}, websocket)
                 
                 
     except WebSocketDisconnect:
