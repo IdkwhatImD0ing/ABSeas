@@ -1,30 +1,36 @@
-import { Box, Typography, Chip } from "@mui/material";
-import React from "react";
+import {Box, Typography, Chip} from '@mui/material'
+import React from 'react'
 
-function Lesson({ lessonImg, lessonName, time }) {
+function Lesson({lessonImg, lessonName, time}) {
   return (
     <Box
       padding="36px"
       borderRadius="36px"
       border={`8px solid #D1E4EE`}
       backgroundColor="#FFF"
-      alignContent={"center"}
-      justifyContent={"center"}
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"center"}
-      gap={"20px"}
+      alignContent={'center'}
+      justifyContent={'center'}
+      display={'flex'}
+      flexDirection={'column'}
+      alignItems={'center'}
+      gap={'20px'}
     >
-      <img src={lessonImg} />
+      <img
+        src={lessonImg}
+        style={{
+          maxWidth: '100%',
+          maxHeight: '100%',
+        }}
+      />
       <Typography
         sx={{
-          color: "#676767",
-          fontFamily: "Poppins",
-          fontSize: "2.5rem",
-          fontStyle: "normal",
-          fontWeight: "900",
-          lineHeight: "normal",
-          textAlign: "center",
+          color: '#676767',
+          fontFamily: 'Poppins',
+          fontSize: '2.5rem',
+          fontStyle: 'normal',
+          fontWeight: '900',
+          lineHeight: 'normal',
+          textAlign: 'center',
         }}
       >
         {lessonName}
@@ -33,11 +39,11 @@ function Lesson({ lessonImg, lessonName, time }) {
         backgroundColor="#D1E4EE"
         borderRadius="16px"
         padding="8px 16px"
-        width={"fit-content"}
+        width={'fit-content'}
       >
         <Typography
           fontWeight="900"
-          fontSize={"1.8rem"}
+          fontSize={'1.8rem'}
           color="#676767"
           textAlign="center"
         >
@@ -45,7 +51,7 @@ function Lesson({ lessonImg, lessonName, time }) {
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }
 
-export default Lesson;
+export default Lesson

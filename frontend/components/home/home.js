@@ -1,14 +1,14 @@
-"use client";
-import { useState } from "react";
-import { Box, Stack, Typography, TextField, Button, Card } from "@mui/material";
-import SelectionButton from "./selectionButton";
-import NavBar from "../navBar";
-import Lesson from "../Lessons/Lesson";
+'use client'
+import {useState} from 'react'
+import {Box, Stack, Typography, TextField, Button, Grid} from '@mui/material'
+import SelectionButton from './selectionButton'
+import NavBar from '../navBar'
+import Lesson from '../Lessons/Lesson'
 
-export default function Home({ sendData }) {
-  const [topic, setTopic] = useState("");
+export default function Home({sendData}) {
+  const [topic, setTopic] = useState('')
   //   card or free mode
-  const [viewMode, setViewMode] = useState("Magic Mode");
+  const [viewMode, setViewMode] = useState('Magic Mode')
 
   return (
     <Box
@@ -16,18 +16,20 @@ export default function Home({ sendData }) {
       height="100%"
       top={0}
       left={0}
-      overflow={"hidden"}
+      overflow={viewMode === 'Magic Mode' ? 'hidden' : 'auto'}
       display="flex"
       flexDirection="row"
       justifyContent="space-between"
       padding="36px"
       sx={{
-        backgroundImage: "url(/home.svg)",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundImage: 'url(/home.svg)',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <NavBar />
+      <Box position="fixed" width="300px" height="calc(100vh - 72px)">
+        <NavBar />
+      </Box>
       <Stack
         width="100%"
         direction="column"
@@ -36,16 +38,17 @@ export default function Home({ sendData }) {
         alignItems="center"
         alignContent="center"
         justifyContent="flex-start"
+        marginLeft="300px"
       >
         <SelectionButton viewMode={viewMode} setViewMode={setViewMode} />
-        {viewMode === "Magic Mode" ? (
+        {viewMode === 'Magic Mode' ? (
           <MagicView sendData={sendData} topic={topic} setTopic={setTopic} />
         ) : (
           <CardView />
         )}
       </Stack>
     </Box>
-  );
+  )
 }
 
 const MusicSvg = () => (
@@ -61,22 +64,23 @@ const MusicSvg = () => (
       fill="white"
     />
   </svg>
-);
-function MagicView({ sendData, topic, setTopic }) {
+)
+function MagicView({sendData, topic, setTopic}) {
   return (
-    <Box
-      padding="56px 256px"
-      display={"flex"}
-      alignContent={"center"}
-      justifyContent={"center"}
-      flexDirection={"column"}
+    <Stack
+      width="70.21%"
+      height="66.17%"
+      direction="column"
+      spacing="4rem"
+      alignItems="center"
+      justifyContent="center"
     >
       <Typography
         sx={{
-          color: "var(--pink, #FF7AAA)",
-          textAlign: "center",
-          fontFamily: "Poppins",
-          fontSize: "6.25rem",
+          color: 'var(--pink, #FF7AAA)',
+          textAlign: 'center',
+          fontFamily: 'Poppins',
+          fontSize: '6.25rem',
           fontWeight: 900,
           textShadow: `
       -4px -4px 0 #fff,  
@@ -94,54 +98,54 @@ function MagicView({ sendData, topic, setTopic }) {
       <TextField
         placeholder="I want to sing about..."
         value={topic}
+        fullWidth
         onChange={(e) => setTopic(e.target.value)}
         sx={{
-          maxWidth: "600px",
-          borderRadius: "38px",
-          padding: "12px 22px",
-          background: "#FFF",
-          boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
-          borderRadius: "38px",
-          background: "#FFF",
-          boxShadow: "15.444px 15.444px 0px 0px #D1E4EE",
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              border: "none",
+          borderRadius: '38px',
+          padding: '12px 22px',
+          background: '#FFF',
+          boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
+          borderRadius: '38px',
+          background: '#FFF',
+          boxShadow: '15.444px 15.444px 0px 0px #D1E4EE',
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              border: 'none',
             },
-            "&.Mui-focused fieldset": {
-              border: "none",
+            '&.Mui-focused fieldset': {
+              border: 'none',
             },
-            "&:hover fieldset": {
-              border: "none",
+            '&:hover fieldset': {
+              border: 'none',
             },
           },
         }}
         InputProps={{
           style: {
-            color: "#9A9A9A",
-            fontFamily: "Poppins",
-            fontSize: "2.07406rem",
-            fontStyle: "normal",
-            fontWeight: "700",
-            lineHeight: "normal",
-            maxWidth: "600px",
+            color: '#9A9A9A',
+            fontFamily: 'Poppins',
+            fontSize: '2.07406rem',
+            fontStyle: 'normal',
+            fontWeight: '700',
+            lineHeight: 'normal',
+            maxWidth: '600px',
           },
         }}
       />
       <Button
         onClick={() => {
           if (topic) {
-            sendData({ event: "generate", prompt: topic });
+            sendData({event: 'generate', prompt: topic})
           }
         }}
         sx={{
-          width: "31.5rem",
-          height: "6.6rem",
-          borderRadius: "38.333px",
-          background: "var(--pink, #FF7AAA)",
-          boxShadow: "19.166px 19.166px 0px 0px #F9367C",
-          "&:hover": {
-            backgroundColor: "#F9367C", // Darker shade on hover
+          width: '31.5rem',
+          height: '6.6rem',
+          borderRadius: '38.333px',
+          background: 'var(--pink, #FF7AAA)',
+          boxShadow: '19.166px 19.166px 0px 0px #F9367C',
+          '&:hover': {
+            backgroundColor: '#F9367C', // Darker shade on hover
           },
         }}
       >
@@ -154,12 +158,12 @@ function MagicView({ sendData, topic, setTopic }) {
           <MusicSvg />
           <Typography
             sx={{
-              color: "#FFF",
-              fontFamily: "Poppins",
-              fontSize: "3.19rem",
+              color: '#FFF',
+              fontFamily: 'Poppins',
+              fontSize: '3.19rem',
               fontWeight: 800,
-              textAlign: "center",
-              verticalAlign: "middle",
+              textAlign: 'center',
+              verticalAlign: 'middle',
             }}
           >
             Play
@@ -167,20 +171,27 @@ function MagicView({ sendData, topic, setTopic }) {
           <MusicSvg />
         </Stack>
       </Button>
-    </Box>
-  );
+    </Stack>
+  )
 }
 
 // lessons page
 function CardView() {
   return (
-    <Box>
+    <Stack
+      width="100%"
+      direction="column"
+      spacing="4rem"
+      alignItems="center"
+      justifyContent="center"
+      padding="36px"
+    >
       <Typography
         sx={{
-          color: "var(--pink, #FF7AAA)",
-          textAlign: "center",
-          fontFamily: "Poppins",
-          fontSize: "6.25rem",
+          color: 'var(--pink, #FF7AAA)',
+          textAlign: 'center',
+          fontFamily: 'Poppins',
+          fontSize: '6.25rem',
           fontWeight: 900,
           textShadow: `
 -4px -4px 0 #fff,  
@@ -195,8 +206,28 @@ function CardView() {
       >
         Lessons
       </Typography>
-      <Box>
-        <Stack direction="row" spacing={2}>
+      <Stack
+        width="100%"
+        padding="3.5rem"
+        spacing={2}
+        sx={{
+          borderRadius: '2.25rem',
+          background: '#FFF',
+        }}
+      >
+        <Typography
+          sx={{
+            color: '#676767',
+            fontFamily: 'Inter',
+            fontSize: '3.5rem',
+            fontStyle: 'normal',
+            fontWeight: 800,
+            lineHeight: 'normal',
+          }}
+        >
+          Hard Skills
+        </Typography>
+        <Stack width="100%" direction="row" spacing={2}>
           <Lesson
             lessonImg=" ./numbers.svg"
             lessonName="Counting"
@@ -213,7 +244,46 @@ function CardView() {
             time="6 minutes"
           />
         </Stack>
-      </Box>
-    </Box>
-  );
+      </Stack>
+      <Stack
+        width="100%"
+        padding="3.5rem"
+        spacing={2}
+        sx={{
+          borderRadius: '2.25rem',
+          background: '#FFF',
+        }}
+      >
+        <Typography
+          sx={{
+            color: '#676767',
+            fontFamily: 'Inter',
+            fontSize: '3.5rem',
+            fontStyle: 'normal',
+            fontWeight: 800,
+            lineHeight: 'normal',
+          }}
+        >
+          Soft Skills
+        </Typography>
+        <Stack width="100%" direction="row" spacing={2}>
+          <Lesson
+            lessonImg=" ./broom.svg"
+            lessonName="Sharing"
+            time="3 minutes"
+          />
+          <Lesson
+            lessonImg=" ./socks.svg"
+            lessonName="Friendship"
+            time="2 minutes"
+          />
+          <Lesson
+            lessonImg=" ./soap.svg"
+            lessonName="Chores"
+            time="5 minutes"
+          />
+        </Stack>
+      </Stack>
+    </Stack>
+  )
 }
