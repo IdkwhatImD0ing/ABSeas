@@ -8,6 +8,7 @@ function Testing() {
     <div>
       <h1>Download Songs</h1>
       <AudioDownloadLink filename="music.mp3" />
+      <AudioDownloadLink filename="test1.mp3" />
     </div>
   );
 }
