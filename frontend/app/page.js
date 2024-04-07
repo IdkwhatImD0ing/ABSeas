@@ -2,7 +2,7 @@
 import {useState, useRef, useEffect} from 'react'
 import Home from '@/components/Home/Home'
 import {Box} from '@mui/material'
-import FlashcardPage from '@/components/flashcards/flashcardPage'
+import FlashcardsPage from '@/components/flashcards/flashcardPage'
 import SongContext from '@/components/SongContext'
 import LyricsPage from '@/components/lyricsPage'
 function base64ToArrayBuffer(base64) {
@@ -88,7 +88,7 @@ export default function Default() {
         setSong((prev) => ({...prev, lyrics: data.lyrics}))
       }
       if (data.metadata) {
-        console.log('Received metadata:')
+        console.log('Received metadata:', data.metadata)
         setSong((prev) => ({...prev, metadata: data.metadata}))
       }
       if (data.audio) {
@@ -104,6 +104,9 @@ export default function Default() {
           console.log('Queueing audio data')
           audioDataQueue.current.push(audioArrayBuffer)
         }
+      }
+      if (data.end_song) {
+        setPage(2)
       }
     }
 
@@ -129,7 +132,7 @@ export default function Default() {
       <Box width="100vw" height="100vh" top={0} left={0} overflow={'hidden'}>
         {page === 0 && <Home sendData={sendData} />}
         {page === 1 && <LyricsPage />}
-        {page === 2 && <FlashcardPage />}
+        {page === 2 && <FlashcardsPage />}
       </Box>
     </SongContext.Provider>
   )

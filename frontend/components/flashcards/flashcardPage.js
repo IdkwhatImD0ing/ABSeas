@@ -1,9 +1,11 @@
-import { Box, Typography, Grid } from "@mui/material";
-import NavBar from "../navBar";
-import Flashcards from "./flashcard";
-function flashcardsPage() {
+import {Box, Typography, Grid} from '@mui/material'
+import {useContext} from 'react'
+import NavBar from '../navBar'
+import Flashcards from './flashcard'
+import SongContext from '../SongContext'
+function FlashcardsPage() {
   // Array of 6 elements
-  const flashcards = Array.from({ length: 6 }, (v, i) => i);
+  const {song} = useContext(SongContext)
   return (
     <Box
       width="100%"
@@ -11,14 +13,14 @@ function flashcardsPage() {
       position="absolute"
       top={0}
       left={0}
-      overflow={"hidden"}
+      overflow={'hidden'}
       backgroundColor="#50B5FF"
       padding="36px"
       gap="22px"
       display="flex"
       flexDirection="row"
     >
-      <NavBar/>
+      <NavBar />
       <Box
         display="flex"
         flexDirection="column"
@@ -29,8 +31,8 @@ function flashcardsPage() {
       >
         <Typography
           sx={{
-            fontSize: "4.2rem",
-            fontWeight: "900",
+            fontSize: '4.2rem',
+            fontWeight: '900',
             textShadow: `
           -4px -4px 0 #fff,  
            4px -4px 0 #fff,
@@ -40,7 +42,7 @@ function flashcardsPage() {
            4px  0 0 #fff,
            0  -4px 0 #fff,
            0   4px 0 #fff`,
-            color: "var(--pink, #FF7AAA)",
+            color: 'var(--pink, #FF7AAA)',
           }}
         >
           Your music cards
@@ -51,35 +53,36 @@ function flashcardsPage() {
           spacing={2}
           container
           sx={{
-            padding: "36px",
+            padding: '36px',
             // border: "14px solid #",
-            backgroundColor: "#fff",
-            borderRadius: "36px",
-            minHeight: "50vh",
+            backgroundColor: '#fff',
+            borderRadius: '36px',
+            minHeight: '50vh',
           }}
         >
-          {flashcards.map((card, index) => (
+          {song.metadata.map((card, index) => (
             <Grid
               height="50%"
               item
               xs={4}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <Flashcards
-                cardImg=""
-                cardName="hello"
-                learnName="hello"
-              ></Flashcards>
+                cardImg={card.image}
+                cardName={card.word}
+                learning={card.learning}
+                audio={card.audio}
+              />
             </Grid>
           ))}
         </Grid>
       </Box>
     </Box>
-  );
+  )
 }
 
-export default flashcardsPage;
+export default FlashcardsPage

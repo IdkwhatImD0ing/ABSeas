@@ -23,6 +23,7 @@ function LyricsPage() {
   return (
     <Box
       display="flex"
+      flexDirection="column"
       justifyContent="flex-start"
       width="fit-content"
       padding="36px"
@@ -35,7 +36,7 @@ function LyricsPage() {
             color: '#535562',
             textAlign: 'center',
             fontFamily: 'Poppins',
-            fontSize: '2.75625rem',
+            fontSize: '1.75625rem',
             fontWeight: '800',
           }}
         >
