@@ -43,7 +43,7 @@ async def generate_and_broadcast_music(lyrics):
     # Retrieve the song audio content via a streaming HTTP request.
     response = GenerateSong.session.get(link, stream=True)
     audio = response.iter_content()
-    return audio
+    return (link, audio)
 
 async def transcribe_audio(audio):
     client = AsyncOpenAI()

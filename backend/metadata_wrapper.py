@@ -150,6 +150,7 @@ async def generate_metadata(lyrics, manager, websocket):
         } for i, picture in enumerate(pictures)
     ]
     print("finished generating metadata")
+    print(pictures_data)
     await manager.send_personal_message({"metadata": pictures_data}, websocket)  
     return pictures_data
     
