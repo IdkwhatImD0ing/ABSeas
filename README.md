@@ -16,24 +16,24 @@ To help make learning accessible and enjoyable for every child, we focused on th
 **Progressive Learning**: Our content is capable of growing with the learner, starting with basics like the ABCs and advancing to more complex topics like social skills at the learner's request
 
 Our approach emphasizes ease of use, engaging content, and adaptability, making learning a delightful journey for all children.
-![Use Case Flow 1](https://cdn.discordapp.com/attachments/1220620651501453323/1226675733913665588/image.png?ex=6625a1cd&is=66132ccd&hm=875630e226bea72a4cf9f2c982433d49391b97edb208d86dc6e5651f92bc484d&=&format=webp&quality=lossless&width=1226&height=690)
+![Use Case Flow 1](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/0c5db584-7f3c-4739-a82a-d71b4212de47)
 
 ## Design Process
 When designing ABSeas, we aimed for simplicity in learning and integrated preschool knowledge with engaging music and visuals. Our interface is designed with bold colors and large, interactive elements, making it easy for young learners to navigate on tablets or for parents to help on desktops. We've transformed essential preschool concepts into catchy songs and colorful visuals that grab attention and aid memory.
-![Design Process 1](https://cdn.discordapp.com/attachments/1220620651501453323/1226675081044820029/image.png?ex=6625a131&is=66132c31&hm=bd45855e99634536eefece75dcc21faff0ccc0ae9b2a44c9531b3494cf5580e4&=&format=webp&quality=lossless&width=1226&height=690)
+![Design Process 1](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/1af4d369-c219-43c1-b5b1-dc61a9e6a30d)
 
 ABSeas offers a personalized learning experience. It subtly guides users—both kids and parents—through its modules, ensuring a smooth flow of content. This approach helps avoid overwhelming choices, making each interaction with ABSeas feel tailored and effortlessly educational, yet natural and fun.
 
-![Design Process 2](https://cdn.discordapp.com/attachments/1220620651501453323/1226673408817758238/image.png?ex=66259fa3&is=66132aa3&hm=f60b42737e0faccdc87f3295057d6cb493ae77651341f3a616ee67a29b569928&=&format=webp&quality=lossless&width=1226&height=690)
+![Design Process 2](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/adf33887-713a-4ce7-914d-630d64d6e3a8)
 
 ## How we built it (Technical)
 **Frontend**
 We utilized the current standard tech stack in web development.
-![Frontend Tech Stack](https://media.discordapp.net/attachments/1220620651501453323/1226454805778796585/ABSeas.png?ex=6624d40c&is=66125f0c&hm=034cff420f32d150d1106c9659354db4408397d00ddafa7220a81467d9d5352b&=&format=webp&quality=lossless&width=1226&height=690)
+![Frontend Tech Stack](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/a748b68c-58cb-400f-999d-8fbe1a8d0957)
 
 **Backend**
 Our backend pipeline utilizes cutting edge artificial intelligence technologies. 
-![Backend Tech Stack](https://media.discordapp.net/attachments/1220620651501453323/1226556424960872489/image.png?ex=662532b0&is=6612bdb0&hm=8cae064a3b1118bdf75671d9c3d6a6f5e5ed393096c7ac9f04fd8edb82180d52&=&format=webp&quality=lossless&width=859&height=482)
+![Backend Tech Stack](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/6d19074e-036f-4285-8adf-aeb61216a621)
 
 These include:
 - Anthropic Claude, a competitor to ChatGPT boasting better written and more creative responses
@@ -43,7 +43,7 @@ These include:
 - Open AI Whisper
 
 Our song creation pipeline is shown below:
-![Pipeline](https://media.discordapp.net/attachments/1220620651501453323/1226473021179691051/pipeline.png?ex=6624e503&is=66127003&hm=ddfcb3418ed26c5d3ba14037755f72eae5c15c84e2257b52c88400c6b67a076a&=&format=webp&quality=lossless&width=1226&height=689)
+![Pipeline](https://github.com/IdkwhatImD0ing/ABSeas/assets/41877651/e6895802-b1c0-4b75-b624-1e16586c5117)
 
 ## Challenges we ran into
 Integrating Firebase and various APIs posed a key challenge in our project, requiring tight coordination between frontend interactivity and backend stability. We had to ensure Firebase's real-time database synced flawlessly with many synchronous API calls.
